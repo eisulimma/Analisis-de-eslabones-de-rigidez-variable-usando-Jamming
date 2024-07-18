@@ -9,6 +9,5 @@ Primero: La generación del eslabón y los acoples para los motores dynamixel.
 
 Segundo: El codigo de la ESP32. Con la ESP32 se realizan dos funciones:
 
-        1. Lectura del sensor de vacío. 
-        
-        2. Control de electrovalvulas. 
+        - Lectura del sensor de vacío. 
+        - Control de electrovalvulas. 
