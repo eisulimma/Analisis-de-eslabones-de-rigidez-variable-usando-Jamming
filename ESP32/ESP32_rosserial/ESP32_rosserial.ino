@@ -1,9 +1,15 @@
 //Codigo para el control de las electro valculas y lectura del sensor de vacio 
-//Los datos se publican usando Ros 
+//Los datos se publican usando Rosserial
 //De la misma forma se crea un subscriptor para que envie los datos de control de la electrovalcula
 //Los codigos de control son:
-//Publisher Sensor_vacio: rostopic echo sensor_vacio
-//Subscriber Relé: rostopic pub /Rele std_msgs/UInt8 "data: 0" 
+//1. Inicializar roscore: 
+//$ roscore
+//2. Conectar con el puerto USB:
+//$ rosrun rosserial_python serial_node.py /dev/ttyUSB0
+//3. Lecturas del sensor de vacío:
+//$ rostopic echo sensor_vacio
+//4. Control del relé:
+//$ rostopic pub /Rele std_msgs/UInt8 "data: 0" 
 // Para abrir el Relé (Cerrar Valvula): Data = 0
 // Para cerrar el Relé (Abrir Valvula): Data= 1
 
