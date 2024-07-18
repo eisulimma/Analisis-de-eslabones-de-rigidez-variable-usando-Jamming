@@ -1,0 +1,48 @@
+Errors:
+1. when running: $ rosrun rosserial_python serial_node.py /dev/ttyUSB0:
+[INFO] [1721057729.005086]: ROS Serial Python Node
+[INFO] [1721057729.013952]: Connecting to /dev/ttyUSB0 at 57600 baud
+[INFO] [1721057731.120155]: Requesting topics...
+[ERROR] [1721057732.466419]: Mismatched protocol version in packet (b'\xce'): lost sync or rosserial_python is from different ros release than the rosserial client
+
+Solution: Un coment the line 48: nh.getHardware()->setBaud(57600);
+Also newer versions are written as: nh.getHardware()->setBaudRate(57600);
+
+2. when running: $ rosrun rosserial_python serial_node.py /dev/ttyUSB0:
+[INFO] [1720882419.186226]: ROS Serial Python Node
+[INFO] [1720882419.194164]: Connecting to /dev/ttyUSB0 at 57600 baud
+[ERROR] [1720882419.197057]: Error opening serial: [Errno 16] could not open port /dev/ttyUSB0: [Errno 16] Device or resource busy: '/dev/ttyUSB0'
+
+Solution: 
+1. Verify the usage of the serial port: $ lsof /dev/ttyUSB0
+2. If any process is listed kill it using the number of the process (PID): $ kill -9 <PID>
+3. Make sure the serial port is free: $ lsof /dev/ttyUSB0
+4. Run again: $ rosrun rosserial_python serial_node.py /dev/ttyUSB0
+
+Example: 
+$ lsof /dev/ttyUSB0
+COMMAND    PID     USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+serial-mo 4213 estrella    3u   CHR  188,0      0t0  659 /dev/ttyUSB0
+$ kill -9 4213
+$ lsof /dev/ttyUSB0
+
+3. When compiling the Arduino code: 
+/home/estrella/Arduino/TFG_rosserial/TFG_rosserial_copy_20240713172641/TFG_rosserial_copy_20240713172641.ino: In function 'void setup()':
+/home/estrella/Arduino/TFG_rosserial/TFG_rosserial_copy_20240713172641/TFG_rosserial_copy_20240713172641.ino:35:21: error: 'class ArduinoHardware' has no member named 'setBaud'
+   nh.getHardware()->setBaud(57600);
+                     ^~~~~~~
+Multiple libraries were found for "ros.h"
+  Used: /home/estrella/Arduino/libraries/Rosserial_Arduino_Library
+  Not used: /home/estrella/Arduino/libraries/ros_lib
+exit status 1
+
+Compilation error: 'class ArduinoHardware' has no member named 'setBaud'
+
+Solution: 
+1. Check that you have the correct version of 'rosserial'
+2. Writte the correct versiom of Setting Baud Rate: 
+  - Older versions: nh.getHardware()->setBaud(57600);
+  - Newer versions: nh.getHardware()->setBaudRate(57600);
+3. Generate 'ros_lib' again: $ rosrun rosserial_arduino make_libraries.py ~/Arduino/libraries
+
+You can also try to comment and uncomment 'nh.getHardware()->setBaud(57600);'. 
