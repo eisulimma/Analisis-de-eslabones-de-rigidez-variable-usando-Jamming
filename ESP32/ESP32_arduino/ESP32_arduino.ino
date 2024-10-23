@@ -12,7 +12,7 @@ void setup() {
 
 void loop() {
   digitalWrite(rele,HIGH); 
-  //HIGH: cerrar  Relé, por tanto corren 10V y se abre la electrovalcula
+  //HIGH: cerrar  Relé, por tanto corren 12V y se abre la electrovalcula
   //LOW: abrir Relé, por tanto se cierra la electrovalcula
 
   //Lectura de la entrada analógica
